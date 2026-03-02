@@ -20,16 +20,16 @@ class DatabaseSeeder extends Seeder
     {
         $dataUser = [
             [
-                'nama' => 'Slamet Kuatno, S.Pd',
-                'username' => 'slametkuatno',
-                'email' => 'slametkuatno@gmail.com',
+                'nama' => 'Rafie Aditya Junial',
+                'username' => 'admin',
+                'email' => 'rafiaditya@gmail.com',
                 'jabatan' => 'Waka Sarpras',
                 'password' => bcrypt('admin'),
                 'role' => 'admin'
             ],
             [
-                'nama' => 'Rafie Aditya Junial',
-                'username' => 'RafieAditya',
+                'nama' => 'Anisa',
+                'username' => 'anisa',
                 'email' => 'rafi@gmail.com',
                 'jabatan' => '',
                 'password' => bcrypt('12345'),
@@ -53,14 +53,14 @@ class DatabaseSeeder extends Seeder
             [
                 'user_id' => 2,
                 'nis' => '12345678',
-                'kelas' => '12 RPL',
-                'jurusan' => 'PPLG'
+                'kelas' => '12',
+                'jurusan' => 'RPL'
             ],
             [
                 'user_id' => 3,
                 'nis' => '12345679',
-                'kelas' => '12 RPL',
-                'jurusan' => 'PPLG'
+                'kelas' => '12',
+                'jurusan' => 'RPL'
             ],
         ];
         foreach ($dataSiswa as $siswa) {
@@ -103,7 +103,7 @@ class DatabaseSeeder extends Seeder
                 'kategori_id' => 1,
                 'judul' => 'Lampu Mati',
                 'isi' => 'Mohon di cek, lampu di ruang kelas 12 RPL mati',
-                'status' => 'diproses',
+                'status' => 'menunggu',
             ],
             [
                 'siswa_id' => 1,
@@ -118,6 +118,20 @@ class DatabaseSeeder extends Seeder
                 'judul' => 'Toilet Mampet',
                 'isi' => 'Mohon di cek, toilet perempuan di kamar 2, saluran pembuangannya mampet',
                 'status' => 'selesai',
+            ],
+            [
+                'siswa_id' => 2,
+                'kategori_id' => 2,
+                'judul' => 'Toilet Mampet',
+                'isi' => 'Mohon di cek, toilet perempuan di kamar 2, saluran pembuangannya mampet',
+                'status' => 'menunggu',
+            ],
+            [
+                'siswa_id' => 2,
+                'kategori_id' => 2,
+                'judul' => 'Toilet Mampet',
+                'isi' => 'Mohon di cek, toilet perempuan di kamar 2, saluran pembuangannya mampet',
+                'status' => 'menunggu',
             ],
         ];
 

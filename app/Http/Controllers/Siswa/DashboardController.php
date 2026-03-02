@@ -14,7 +14,7 @@ class DashboardController extends Controller
     {
         $siswa_id = auth()->user()->siswa->id;
         $data = [
-            'aspirasi' => Aspirasi::where('siswa_id', $siswa_id)->get(),
+            'aspirasi' => Aspirasi::where('siswa_id', $siswa_id)->paginate(5),
             'total_aspirasi' => Aspirasi::where('siswa_id', $siswa_id)->get()->count(),
             'aspirasi_menunggu' => Aspirasi::where([
                 'siswa_id' => $siswa_id,
@@ -62,6 +62,46 @@ class DashboardController extends Controller
         $validatedData['status'] = 'menunggu';
 
         Aspirasi::create($validatedData);
-        return redirect()->route('siswa.dashboard');
+        return redirect()->route('siswa.dashboard')->with('success', 'Aspirasi berhasil ditambahkan!');
+    }
+
+    // 1. Fungsi untuk menampilkan halaman edit
+    public function editAspirasi($id)
+    {
+        $aspirasi = Aspirasi::findOrFail($id);
+
+        // Keamanan: Pastikan siswa hanya bisa edit aspirasi miliknya sendiri
+        if ($aspirasi->siswa_id != auth()->user()->siswa->id) {
+            return redirect()->route('siswa.dashboard')->with('error', 'Akses dilarang!');
+        }
+
+        $data = [
+            'aspirasi' => $aspirasi,
+            'kategori' => Kategori::all(),
+        ];
+
+        return view('siswa.edit-aspirasi', $data);
+    }
+
+    // 2. Fungsi untuk memproses update data ke database
+    public function updateAspirasi(Request $request, $id)
+    {
+        $aspirasi = Aspirasi::findOrFail($id);
+
+        $validatedData = $request->validate([
+            'kategori_id' => 'required|exists:kategori,id',
+            'judul' => 'required|string|max:255',
+            'isi' => 'required|string',
+        ]);
+
+        $aspirasi->update($validatedData);
+
+        return redirect()->route('siswa.dashboard')->with('success', 'Aspirasi berhasil diperbarui!');
+    }
+
+    public function delete(Aspirasi $aspirasi)
+    {
+        $aspirasi->delete();
+        return redirect()->route('siswa.dashboard')->with('success', 'Data Aspirasi berhasil dihapus di dalam database');
     }
 }

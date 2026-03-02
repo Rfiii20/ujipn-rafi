@@ -1,7 +1,8 @@
 @extends('siswa.layouts.tamplates')
 
 @section('content')
-    <div class="main-content min-vh-100">
+
+    <div class="main-content min-vh-100" style="background: #111827; border-radius: 15px;">
         <div class="box shadow p-5">
             <h2 class="text-center mb-4">Form Pengaduan Aspirasi</h2>
             <p class="lead fst-italic">Isi Data Dibawah Ini Dengan Benar</p>
@@ -61,9 +62,9 @@
                         </div>
                     </div>
                     <div class="d-flex justify-content-between">
-                        <button type="submit" class="btn btn-success"><i class="fas fa-save">Proses Ajuan</i></button>
+                        <button type="submit" class="btn btn-success"><i class="fas fa-save"></i> Proses Ajuan </button>
                         <a href="{{ route('siswa.dashboard') }}" class="btn btn-secondary"><i
-                                class="fas fa-close">Cancel</i></a>
+                                class="fas fa-close"></i> Cancel</a>
                     </div>
             </form>
         </div>

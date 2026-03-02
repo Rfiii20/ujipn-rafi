@@ -1,76 +1,62 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 
 <head>
-    <title>SarPras PN|  {{ $title  }}</title>
-    <link rel="stylesheet" href="/css/dashboard.css">
-    <link rel="stylesheet" href="/vendor/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/vendor/fontawesome/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ $title ?? 'Admin Panel' }}</title>
+    <link rel="icon" href="{{ asset('img/logo.png') }}" type="image/png">
+    <link rel="stylesheet" href="{{ asset('css/dashboard.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendor/fontawesome/css/all.min.css') }}">
+</head>
 
 <body>
+    <div class="container-fluid">
+        <div class="row min-vh-100">
 
-    <div class="container-main">
+            @include('admin.layouts.sidebar')
 
-        @include('admin.layouts.sidebar')
-
-        <main class="main">
-            <div class="header">
-                <div class="logo" style="display: flex; align-items: center;">
-                    <i class="fas fa-tachometer" style="margin-right: 10px; font-size: 20px;"></i>
-                    <h1 class="m-0">{{ $title }}</h1>
-                </div>
-
-                <div class="user-menu">
-                    <div class="user-trigger" onclick="toggleDropdown()">
-                        <i class="fa-solid fa-user-circle"></i>
-                        <span>Admin</span>
-                        <i class="fa-solid fa-caret-down"></i>
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4 content">
+                <div class="d-flex justify-content-between align-items-center mb-4 header">
+                    <div class="d-flex align-items-center">
+                        <i class=" me-2 text-warning" style="font-size:22px;"></i>
+                        <h2 class="m-0">{{ $title }}</h2>
                     </div>
 
-                    <div class="dropdown" id="userDropdown">
-                        <a href="">
-                            <i class="fa-solid fa-user"></i> Profile
-                        </a>
 
-                        <form action="{{ route('logout') }}" method="POST">
-                            @csrf
-                            <!-- Laravel -->
-                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                            <button type="submit">
-                                <i class="fa-solid fa-right-from-bracket"></i> Logout
-                            </button>
-                        </form>
+                    <div class="dropdown">
+                        <button class="btn btn-dark dropdown-toggle d-flex align-items-center" type="button"
+                            id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-user-circle me-2"></i> {{ Auth::user()->nama }}
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                            <li>
+                                <a class="dropdown-item" href="#">
+                                    <i class="fas fa-user me-2"></i> Profile
+                                </a>
+                            </li>
+                            <li>
+                                <form action="{{ route('logout') }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="dropdown-item text-danger">
+                                        <i class="fas fa-sign-out-alt me-2"></i> Logout
+                                    </button>
+                                </form>
+                            </li>
+                        </ul>
                     </div>
                 </div>
-            </div>
-
-            <div class="main-content">
 
                 @yield('content')
-
-
-            </div>
-        </main>
+            </main>
+        </div>
     </div>
 
-    <script>
-        function toggleDropdown() {
-            const dropdown = document.getElementById('userDropdown');
-            dropdown.style.display = dropdown.style.display === 'block' ?
-                'none' :
-                'block';
-        }
+    <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
-        // Tutup dropdown jika klik di luar
-        document.addEventListener('click', function(e) {
-            const menu = document.querySelector('.user-menu');
-            if (!menu.contains(e.target)) {
-                document.getElementById('userDropdown').style.display = 'none';
-            }
-        });
-    </script>
-
+    <script src="{{ asset('js/jquery-4.0.0.min.js') }}"></script>
+    @yield('script')
 </body>
 
 </html>
-

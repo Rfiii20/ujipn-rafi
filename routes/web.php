@@ -1,10 +1,14 @@
 <?php
 
+use App\Http\Controllers\Admin\AspirasiController;
+use App\Http\Controllers\Admin\DashboardController as DashboardAdmin;
+use App\Http\Controllers\Admin\KategoriController;
+use App\Http\Controllers\Admin\LaporanController;
+use App\Http\Controllers\Admin\SiswaController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Siswa\DashboardController as DashboardSiswa;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\Admin\DashboardController as DashboardAdmin;
-use App\Http\Controllers\Siswa\DashboardController as DashboardSiswa;
 
 Route::get('/', function () {
     // cek apakah dia login atau tidak
@@ -27,7 +31,36 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 // Routing untuk admin
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [DashboardAdmin::class, 'index'])->name('dashboard');
-    route::get('/siswa', [App\Http\Controllers\Admin\SiswaController::class, 'index'])->name('siswa');
+
+
+    // Routing untuk manajemen siswa
+    route::get('/siswa', [SiswaController::class, 'index'])->name('siswa');
+    route::get('/siswa/tambah', [SiswaController::class, 'create'])->name('tambah-siswa');
+    route::post('/tambah', [SiswaController::class, 'tambahSiswa'])->name('proses-tambah');
+    Route::get('/siswa/{id}/edit', [SiswaController::class, 'edit'])->name('siswa-edit');
+    Route::put('/siswa/{id}', [SiswaController::class, 'update'])->name('siswa-update');
+    Route::delete('/siswa/{id}', [SiswaController::class, 'destroy'])->name( 'siswa-delete');
+
+    // Routing untuk manajemen Kategori
+    Route::get('/kategori', [KategoriController::class, 'index'])->name('kategori');
+    Route::get('/form-kategori', [KategoriController::class, 'create'])->name('form-kategori');
+    Route::post('/kategori', [KategoriController::class, 'store'])->name('tambah-kategori');
+    Route::get('/kategori/edit/{kategori}', [KategoriController::class, 'edit'])->name('form-edit-kategori');
+    Route::put('/kategori', [KategoriController::class, 'update'])->name('edit-kategori');
+    Route::get('/kategori/delete/{kategori}', [KategoriController::class, 'delete'])->name('hapus-kategori');
+
+    // Routing untuk manajemen Aspirasi
+    Route::get('/aspirasi', [AspirasiController::class, 'index'])->name('aspirasi');
+    route::post('/get-aspirasi', [AspirasiController::class, 'getTanggapanByAspirasi'])->name('get-aspirasi');
+    route::post('/tanggapan', [AspirasiController::class, 'addTanggapan'])->name('tanggapan');
+    route::get('/aspirasi/delete/aspirasi/{aspirasi}', [AspirasiController::class, 'delete'])->name('hapus-aspirasi');
+
+
+    //Routing Untuk Laporan
+    // halaman laporan
+    Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan');
+    // cetak pdf
+    Route::get('/cetak-laporan', [LaporanController::class, 'cetak'])->name('cetak-laporan');
 });
 
 // Routing untuk siswa
@@ -35,4 +68,7 @@ Route::middleware(['auth', 'role:siswa'])->prefix('siswa')->name('siswa.')->grou
     Route::get('/dashboard', [DashboardSiswa::class, 'index'])->name('dashboard');
     Route::get('/aspirasi', [DashboardSiswa::class, 'tambahAspirasi'])->name('tambah-aspirasi');
     Route::post('/aspirasi', [DashboardSiswa::class, 'simpanAspirasi'])->name('proses-tambah');
+    Route::get('/aspirasi/edit/{id}', [DashboardSiswa::class, 'editAspirasi'])->name('edit-aspirasi');
+    Route::post('/aspirasi/update/{id}', [DashboardSiswa::class, 'updateAspirasi'])->name('update-aspirasi');
+    Route::get('/aspirasi/delete/{id}', [DashboardSiswa::class, 'delete'])->name( 'hapus-aspirasi');
 });

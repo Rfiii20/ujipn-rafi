@@ -1,265 +1,230 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap");
-* {
+/* Pastikan dasar halaman selalu penuh */
+
+html,
+body {
+    height: 100%;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
-    font-family: "Inter", sans-serif;
+    background: #0b0f1a !important;
 }
 
 body {
-    background: linear-gradient(135deg, #eef2f7, #f8fafc);
+    color: #e5e7eb !important;
+    font-family: "Segoe UI", Arial, sans-serif;
 }
 
 
-/* LAYOUT */
+/* Layout */
 
-.container-main {
-    display: flex;
-    min-height: 100vh;
-}
-
-
-/* SIDEBAR */
-
-.sidebar {
-    width: 260px;
-    background: linear-gradient(180deg, #0f172a, #1e293b);
-    color: #fff;
-    padding: 25px 20px;
-}
-
-.sidebar .fa-solid {
-    width: 20px;
-}
-
-.sidebar h2 {
-    font-size: 18px;
-    margin-bottom: 30px;
-}
-
-.sidebar ul {
-    list-style: none;
-}
-
-.sidebar li {
-    margin-bottom: 18px;
-}
-
-.sidebar a {
-    color: #cbd5e1;
-    text-decoration: none;
-    font-size: 14px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.sidebar a:hover {
-    color: #fff;
-}
-
-
-/* MAIN */
-
-.main {
+.content {
     flex: 1;
     padding: 30px;
+    background: #0b0f1a;
+    min-height: 100vh;
+    /* Memastikan area konten minimal selayar */
 }
 
 
-/* HEADER */
+/* Sidebar Fix */
 
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 25px;
-    background-color: #e4e9f7;
-    padding: 15px;
-}
-
-.header h1 {
-    font-size: 20px;
-    color: #1e293b;
-}
-
-
-/* HEADER MENU DASHBOARD ADMIN */
-
-.user-menu {
-    position: relative;
-}
-
-.user-trigger {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    cursor: pointer;
-    color: #333;
-}
-
-.user-trigger i {
-    font-size: 20px;
-}
-
-.dropdown {
-    position: absolute;
-    top: 37px;
-    right: -15px;
-    width: 170px;
-    background: #fff;
-    border-radius: 6px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    display: none;
-    z-index: 100;
-}
-
-.dropdown a,
-.dropdown button {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 15px 15px;
-    width: 100%;
-    border: none;
-    background: none;
-    text-decoration: none;
-    color: #333;
-    cursor: pointer;
-    font-size: 14px;
-}
-
-.dropdown a:hover,
-.dropdown button:hover {
-    background-color: #f2f2f2;
-}
-
-
-/* CARDS */
-
-.cards {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-    margin-bottom: 30px;
-}
-
-.card {
-    position: relative;
-    overflow: hidden;
+.sidebar {
+    background: #111827;
     padding: 20px;
-    border-radius: 14px;
-    color: #fff;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    /* Sidebar narik sampai bawah layar */
+}
+
+.sidebar-header span {
+    font-weight: bold;
+    font-size: 18px;
+    color: #f97316;
+}
+
+.logo {
+    width: 45px;
+}
+
+.nav-link {
+    color: #cbd5e1;
+}
+
+.nav-link.active {
+    background-color: #1f2937 !important;
+    font-weight: bold;
+    color: #f97316 !important;
 }
 
 
-/* ICON BACKGROUND */
+/* Header */
 
-.card::after {
-    content: attr(data-icon);
-    position: absolute;
-    right: 15px;
-    bottom: 10px;
-    font-family: "Font Awesome 6 Free";
-    font-weight: 900;
-    font-size: 70px;
-    color: rgba(255, 255, 255, 0.18);
-    pointer-events: none;
+.header h2 {
+    color: #f97316;
+    font-weight: bold;
 }
 
 
-/* WARNA CARD */
+/* Cards */
 
-.blue {
-    background: linear-gradient(135deg, #3b82f6, #2563eb);
+.card-wrapper .card {
+    border-radius: 12px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    background-color: #1f2937;
+    color: #e5e7eb;
 }
 
-.orange {
-    background: linear-gradient(135deg, #fb923c, #f97316);
+.card-wrapper .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
 }
 
-.green {
-    background: linear-gradient(135deg, #22c55e, #16a34a);
-}
-
-.teal {
-    background: linear-gradient(135deg, #14b8a6, #0d9488);
-}
-
-.card h3 {
-    font-size: 14px;
-    font-weight: 500;
-}
-
-.card p {
+.card h1 {
     font-size: 32px;
-    font-weight: 700;
-    margin-top: 6px;
+    font-weight: bold;
+}
+
+.card .card-text {
+    color: #94a3b8;
 }
 
 
-/* TABLE */
+/* Table */
 
 .table-box {
-    background: #fff;
-    border-radius: 14px;
+    background: #111827;
     padding: 20px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    border-radius: 12px;
 }
 
 .table-box h3 {
+    color: #f97316;
     margin-bottom: 15px;
-    color: #1e293b;
 }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-th,
-td {
+table th,
+table td {
     padding: 12px;
-    font-size: 14px;
-    border-bottom: 1px solid #e5e7eb;
+    border-bottom: 1px solid #1f2937;
+    color: #e5e7eb;
 }
 
-th {
-    text-align: left;
-    color: #475569;
+table th {
+    font-weight: bold;
 }
+
+table thead {
+    background-color: #1f2937;
+}
+
+
+/* Status */
 
 .status {
-    padding: 6px 12px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 32px;
     border-radius: 999px;
-    font-size: 12px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.status-menunggu {
+    background: rgba(250, 204, 21, 0.2);
+    color: #fbbf24;
+}
+
+.status-diproses {
+    background: rgba(34, 197, 94, 0.2);
+    color: #22c55e;
+}
+
+.status-selesai {
+    background: rgba(59, 130, 246, 0.2);
+    color: #3b82f6;
+}
+
+.status-ditolak {
+    background: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+}
+
+
+/* Responsive */
+
+@media (max-width: 768px) {
+    .card-wrapper {
+        gap: 15px;
+    }
+    .header h2 {
+        font-size: 18px;
+    }
+    .sidebar {
+        min-height: auto;
+        /* Di mobile sidebar bisa menyesuaikan konten */
+    }
+}
+
+
+/* ===== DARK ADMIN PAGINATION FIX ===== */
+
+.pagination {
+    justify-content: center;
+}
+
+.page-item .page-link {
+    background-color: #111827;
+    /* kotak */
+    color: #e5e7eb;
+    /* angka */
+    border: 1px solid #374151;
+    transition: 0.2s;
+}
+
+
+/* hover */
+
+.page-item .page-link:hover {
+    background-color: #2563eb;
+    border-color: #2563eb;
     color: #fff;
 }
 
-.menunggu {
-    background: #f97316;
-}
 
-.diproses {
-    background: #22c55e;
-}
+/* active page */
 
-.selesai {
-    background: #14b8a6;
-}
-
-
-/* BUTTON */
-
-.btn {
-    display: inline-block;
-    margin: 20px 0;
-    padding: 14px 30px;
-    background: linear-gradient(135deg, #22c55e, #16a34a);
-    color: #fff;
-    border-radius: 12px;
-    text-decoration: none;
+.page-item.active .page-link {
+    background-color: #3b82f6;
+    border-color: #3b82f6;
+    color: white;
     font-weight: 600;
-    box-shadow: 0 10px 20px rgba(34, 197, 94, 0.4);
+}
+
+
+/* prev next */
+
+.page-item.disabled .page-link {
+    background-color: #020617;
+    color: #6b7280;
+    border-color: #1f2937;
+}
+
+
+/* biar ga transparan di table-dark */
+
+.table-dark .pagination .page-link {
+    background-color: #111827 !important;
+}
+
+
+/* TEXT "Showing 1 to 5 of 6 results" */
+
+.pagination-info,
+.dataTables_info,
+.small.text-muted {
+    color: #cbd5e1 !important;
+    /* abu terang */
+    font-weight: 500;
 }
