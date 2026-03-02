@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Aspirasi;
 use App\Models\Kategori;
-use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
@@ -65,16 +64,9 @@ class DashboardController extends Controller
         return redirect()->route('siswa.dashboard')->with('success', 'Aspirasi berhasil ditambahkan!');
     }
 
-    // 1. Fungsi untuk menampilkan halaman edit
     public function editAspirasi($id)
     {
         $aspirasi = Aspirasi::findOrFail($id);
-
-        // Keamanan: Pastikan siswa hanya bisa edit aspirasi miliknya sendiri
-        if ($aspirasi->siswa_id != auth()->user()->siswa->id) {
-            return redirect()->route('siswa.dashboard')->with('error', 'Akses dilarang!');
-        }
-
         $data = [
             'aspirasi' => $aspirasi,
             'kategori' => Kategori::all(),
@@ -82,11 +74,9 @@ class DashboardController extends Controller
 
         return view('siswa.edit-aspirasi', $data);
     }
-
-    // 2. Fungsi untuk memproses update data ke database
     public function updateAspirasi(Request $request, $id)
     {
-        $aspirasi = Aspirasi::findOrFail($id);
+        $aspirasi = Aspirasi::find($id);
 
         $validatedData = $request->validate([
             'kategori_id' => 'required|exists:kategori,id',
@@ -103,5 +93,16 @@ class DashboardController extends Controller
     {
         $aspirasi->delete();
         return redirect()->route('siswa.dashboard')->with('success', 'Data Aspirasi berhasil dihapus di dalam database');
+    }
+
+    public function cekNotifSiswa()
+    {
+        $siswa_id = auth()->user()->siswa->id;
+
+        $jumlah = Aspirasi::where('siswa_id', $siswa_id)->has('tanggapan')->count();
+
+        return response()->json([
+            'jumlah' => $jumlah
+        ]);
     }
 }

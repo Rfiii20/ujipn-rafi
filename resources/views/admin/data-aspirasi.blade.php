@@ -48,7 +48,7 @@
 
                             <td class="text-center align-middle">
                                 <div class="d-flex justify-content-center align-items-center gap-2">
-                                    @if ( $item->status == 'menunggu')
+                                    @if ($item->status == 'menunggu')
                                         {{-- TANGGAPI --}}
                                         <a href="#"
                                             class="btn btn-success btn-sm d-flex align-items-center justify-content-center gap-2 tombolEdit"
@@ -59,20 +59,20 @@
                                     @else
                                         {{-- UBAH STATUS --}}
                                         <a href="#"
-                                            class="btn btn-primary btn-sm d-flex align-items-center justify-content-center gap-2 tombolEdit {{ $item->status == 'selesai' || $item->status == 'ditolak' ? 'disabled' : ''}}"
+                                            class="btn btn-primary btn-sm d-flex align-items-center justify-content-center gap-2 tombolEdit {{ $item->status == 'selesai' || $item->status == 'ditolak' ? 'disabled' : '' }}"
                                             style="width: 90px;" data-bs-toggle="modal" data-bs-target="#exampleModal"
                                             data-id="{{ $item->id }}">
                                             <i class="fas fa-pen"></i> Ubah
                                         </a>
                                     @endif
 
-                                        {{-- HAPUS --}}
-                                        <a href="/admin/aspirasi/delete/aspirasi/{{ $item->id }}"
-                                            class="btn btn-danger btn-sm d-flex align-items-center justify-content-center gap-2 {{ $item->status == 'menunggu' || $item->status == 'diproses' ? 'disabled' : '' }}"
-                                            style="width: 90px;"
-                                            onclick="if(this.classList.contains('disabled')) { return false; } return confirm('Yakin hapus aspirasi ini?')">
-                                            <i class="fas fa-trash"></i> Hapus
-                                        </a>
+                                    {{-- HAPUS --}}
+                                    <a href="/admin/aspirasi/delete/aspirasi/{{ $item->id }}"
+                                        class="btn btn-danger btn-sm d-flex align-items-center justify-content-center gap-2 {{ $item->status == 'menunggu' || $item->status == 'diproses' ? 'disabled' : '' }}"
+                                        style="width: 90px;"
+                                        onclick="if(this.classList.contains('disabled')) { return false; } return confirm('Yakin hapus aspirasi ini?')">
+                                        <i class="fas fa-trash"></i> Hapus
+                                    </a>
                                 </div>
                             </td>
                         </tr>

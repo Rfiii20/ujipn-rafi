@@ -2,27 +2,32 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Models\User;
 use App\Models\Siswa;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Services\UserSiswaService; // Pastikan Service di-import di sini
 
 class SiswaController extends Controller
 {
+    // Tambahkan constructor supaya service bisa dipanggil di semua method
+    protected $siswaService;
+
+    public function __construct(UserSiswaService $siswaService)
+    {
+        $this->siswaService = $siswaService;
+    }
+
     public function index()
     {
         $data = [
             'title' => 'Data Siswa',
             'siswa' => Siswa::all(),
-
-
         ];
         return view('admin.data-siswa', $data);
     }
 
     public function create()
     {
-
         $data = [
             'title' => 'Tambah Siswa',
         ];
@@ -31,6 +36,7 @@ class SiswaController extends Controller
 
     public function tambahSiswa(Request $request)
     {
+        // Validasi data tetap di Controller
         $validatedData = $request->validate(
             [
                 'nis'     => 'required|integer|digits:8|unique:siswa,nis',
@@ -41,34 +47,16 @@ class SiswaController extends Controller
             ],
             [
                 'nis.required'   => 'NIS wajib diisi.',
-                'nis.digits'    => 'NIS harus 8 angka.',
-                'nis.unique'    => 'NIS sudah digunakan.',
-
+                'nis.digits'     => 'NIS harus 8 angka.',
+                'nis.unique'     => 'NIS sudah digunakan.',
                 'email.required' => 'Email wajib diisi.',
-                'email.email'   => 'Format email tidak valid.',
-                'email.unique'  => 'Email sudah digunakan.',
+                'email.email'    => 'Format email tidak valid.',
+                'email.unique'   => 'Email sudah digunakan.',
             ]
         );
 
-        $username = explode('@', $validatedData['email'])[0];
-
-        // 1️⃣ Buat user & SIMPAN ke variabel
-        $user = User::create([
-            'nama'     => $validatedData['nama'],
-            'username' => $username,
-            'email'    => $validatedData['email'],
-            'password' => bcrypt('password123'),
-            'role'     => 'siswa',
-        ]);
-
-        // 2️⃣ Tambahin user_id ke data siswa
-        $validatedData['user_id'] = $user->id;
-
-        // 3️⃣ Buang field yang bukan milik tabel siswa
-        unset($validatedData['nama'], $validatedData['email']);
-
-        // 4️⃣ Simpan siswa (INI BARU BENAR)
-        Siswa::create($validatedData);
+        // Panggil Service untuk logic pembuatannya (Gak perlu bikin manual di sini)
+        $this->siswaService->create($validatedData);
 
         return redirect()->route('admin.siswa')->with('success', 'Data siswa berhasil ditambahkan!');
     }
@@ -77,16 +65,12 @@ class SiswaController extends Controller
     {
         $siswa = Siswa::findOrFail($id);
 
-        // hapus siswa dulu
-        $siswa->delete();
-
-        // hapus user yang terkait
-        User::where('id', $siswa->user_id)->delete();
+        // Panggil logic hapus dari Service milikmu
+        $this->siswaService->delete($siswa);
 
         return redirect()->route('admin.siswa')
             ->with('success', 'Data siswa berhasil dihapus!');
     }
-
 
     public function edit($id)
     {
@@ -109,15 +93,16 @@ class SiswaController extends Controller
             'email' => 'required|email',
         ]);
 
-        // Proses update menggunakan service atau langsung
-        // Contoh jika langsung:
         $siswa = Siswa::findOrFail($id);
+
+        // Update data Siswa
         $siswa->update([
             'nis' => $request->nis,
             'kelas' => $request->kelas,
             'jurusan' => $request->jurusan,
         ]);
 
+        // Update data User terkait
         $siswa->user->update([
             'nama' => $request->nama,
             'email' => $request->email,

@@ -24,8 +24,8 @@
                 <form method="POST" action="{{ route('login') }}">
                     @csrf
 
-                    <label>Username</label>
-                    <input type="text" name="username" placeholder="Masukkan Username" required autofocus>
+                    <label>Email</label>
+                    <input type="email" name="email" placeholder="Masukkan Email" required autofocus>
 
                     <label>Password</label>
                     <input type="password" name="password" placeholder="Masukkan Password" required>

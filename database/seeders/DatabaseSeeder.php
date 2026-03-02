@@ -31,7 +31,7 @@ class DatabaseSeeder extends Seeder
                 'nama' => 'Anisa',
                 'username' => 'anisa',
                 'email' => 'rafi@gmail.com',
-                'jabatan' => '',
+                'jabatan' => 'siswa',
                 'password' => bcrypt('12345'),
                 'role' => 'siswa'
             ],
@@ -39,7 +39,7 @@ class DatabaseSeeder extends Seeder
                 'nama' => 'Jokowi',
                 'username' => 'Jokowidodo',
                 'email' => 'joko@gmail.com',
-                'jabatan' => '',
+                'jabatan' => 'siswa',
                 'password' => bcrypt('12345'),
                 'role' => 'siswa'
             ],

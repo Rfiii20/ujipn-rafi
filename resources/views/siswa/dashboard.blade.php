@@ -119,16 +119,61 @@
                                 </span>
                             </td>
                             <td class="text-center">
-                                <a href="/siswa/aspirasi/edit/{{ $item->id }}"
-                                    class="btn btn-sm btn-info {{ $item->status != 'menunggu' ? 'disabled' : '' }}">
-                                    <i class="fas fa-edit"></i> Edit
-                                </a>
-                                <a href="/siswa/aspirasi/delete/{{ $item->id }}"
-                                    class="btn btn-sm btn-danger {{ $item->status != 'menunggu' ? 'disabled' : '' }}"
-                                    onclick="return confirm('Yakin ingin menghapus?')">
-                                    <i class="fas fa-trash-alt"></i> Hapus
-                                </a>
+                                @if ($item->tanggapan->count() > 0)
+                                    <button type="button" class="btn btn-sm btn-success" data-bs-toggle="modal"
+                                        data-bs-target="#modalBalasan{{ $item->id }}">
+                                        <i class="fas fa-comment-dots"></i> Lihat Balasan ({{ $item->tanggapan->count() }})
+                                    </button>
+
+                                    <div class="modal fade" id="modalBalasan{{ $item->id }}" tabindex="-1"
+                                        aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content bg-dark text-white border-secondary">
+                                                <div class="modal-header border-secondary">
+                                                    <h5 class="modal-title text-warning"><i
+                                                            class="fas fa-reply-all me-2"></i>Tanggapan Admin</h5>
+                                                    <button type="button" class="btn-close btn-close-white"
+                                                        data-bs-dismiss="modal"></button>
+                                                </div>
+                                                <div class="modal-body text-start">
+                                                    <label class="text-muted small">Aspirasi Anda:</label>
+                                                    <p class="mb-3">"{{ $item->isi }}"</p>
+                                                    <hr class="border-secondary">
+
+                                                    <label class="text-warning small mb-2">Jawaban Admin:</label>
+                                                    {{-- LOOPING HASMANY --}}
+                                                    @foreach ($item->tanggapan as $balasan)
+                                                        <div
+                                                            class="p-3 rounded bg-secondary bg-opacity-25 mb-3 border-start border-success border-4">
+                                                            <p class="mb-1 text-light">{{ $balasan->isi_tanggapan }}</p>
+                                                            <div class="mt-2 d-flex justify-content-between opacity-75"
+                                                                style="font-size: 10px;">
+                                                                <span><i class="fas fa-user-edit"></i>
+                                                                    {{ $balasan->user->nama }}</span>
+                                                                <span><i class="fas fa-calendar"></i>
+                                                                    {{ $balasan->created_at->format('d M Y') }}</span>
+                                                            </div>
+                                                        </div>
+                                                    @endforeach
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @else
+                                    {{-- JIKA BELUM ADA TANGGAPAN, TAMPILKAN TOMBOL EDIT & HAPUS --}}
+                                    <a href="/siswa/aspirasi/edit/{{ $item->id }}"
+                                        class="btn btn-sm btn-info {{ $item->status != 'menunggu' ? 'disabled' : '' }}">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </a>
+                                    <a href="/siswa/aspirasi/delete/{{ $item->id }}"
+                                        class="btn btn-sm btn-danger {{ $item->status != 'menunggu' ? 'disabled' : '' }}"
+                                        onclick="return confirm('Yakin ingin menghapus?')">
+                                        <i class="fas fa-trash-alt"></i> Hapus
+                                    </a>
+                                @endif
                             </td>
+
+
                         </tr>
                     @endforeach
                 </tbody>

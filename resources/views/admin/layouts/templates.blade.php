@@ -32,8 +32,12 @@
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
                             <li>
-                                <a class="dropdown-item" href="#">
-                                    <i class="fas fa-user me-2"></i> Profile
+                                <a class="dropdown-item d-flex align-items-center" href="{{ route('admin.aspirasi') }}">
+                                    <span><i class="fas fa-bell me-2"></i> Aspirasi Baru</span>
+                                    <span id="notifCount" class="badge rounded-pill bg-danger ms-auto"
+                                        style="display: none;">
+                                        0
+                                    </span>
                                 </a>
                             </li>
                             <li>
@@ -44,6 +48,7 @@
                                     </button>
                                 </form>
                             </li>
+
                         </ul>
                     </div>
                 </div>
@@ -54,9 +59,32 @@
     </div>
 
     <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-
     <script src="{{ asset('js/jquery-4.0.0.min.js') }}"></script>
-    @yield('script')
+
+    <script>
+        function updateNotif() {
+            $.ajax({
+                url: "{{ route('admin.cek-notifikasi') }}",
+                type: "GET",
+                success: function(data) {
+                    if(data.jumlah > 0) {
+                        $('#notifCount').text(data.jumlah).show();
+                    } else {
+                        $('#notifCount').hide();
+                    }
+                },
+                error: function() {
+                    console.log("Gagal mengambil data notifikasi");
+                }
+            });
+        }
+        $(document).ready(function() {
+            updateNotif();
+        });
+    </script>
+
+    @yield('script') </body>
+
 </body>
 
 </html>

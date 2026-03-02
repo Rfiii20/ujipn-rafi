@@ -25,4 +25,6 @@ class Aspirasi extends Model
     {
         return $this->hasMany(Tanggapan::class);
     }
+
+
 }

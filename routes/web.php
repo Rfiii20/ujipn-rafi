@@ -30,13 +30,13 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // Routing untuk admin
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/dashboard', [DashboardAdmin::class, 'index'])->name('dashboard');
+Route::get('/dashboard', [DashboardAdmin::class, 'index'])->name('dashboard');
 
 
     // Routing untuk manajemen siswa
-    route::get('/siswa', [SiswaController::class, 'index'])->name('siswa');
-    route::get('/siswa/tambah', [SiswaController::class, 'create'])->name('tambah-siswa');
-    route::post('/tambah', [SiswaController::class, 'tambahSiswa'])->name('proses-tambah');
+    Route::get('/siswa', [SiswaController::class, 'index'])->name('siswa');
+    Route::get('/siswa/tambah', [SiswaController::class, 'create'])->name('tambah-siswa');
+    Route::post('/tambah', [SiswaController::class, 'tambahSiswa'])->name('proses-tambah');
     Route::get('/siswa/{id}/edit', [SiswaController::class, 'edit'])->name('siswa-edit');
     Route::put('/siswa/{id}', [SiswaController::class, 'update'])->name('siswa-update');
     Route::delete('/siswa/{id}', [SiswaController::class, 'destroy'])->name( 'siswa-delete');
@@ -51,24 +51,26 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 
     // Routing untuk manajemen Aspirasi
     Route::get('/aspirasi', [AspirasiController::class, 'index'])->name('aspirasi');
-    route::post('/get-aspirasi', [AspirasiController::class, 'getTanggapanByAspirasi'])->name('get-aspirasi');
-    route::post('/tanggapan', [AspirasiController::class, 'addTanggapan'])->name('tanggapan');
-    route::get('/aspirasi/delete/aspirasi/{aspirasi}', [AspirasiController::class, 'delete'])->name('hapus-aspirasi');
+    Route::post('/get-aspirasi', [AspirasiController::class, 'getTanggapanByAspirasi'])->name('get-aspirasi');
+    Route::post('/tanggapan', [AspirasiController::class, 'addTanggapan'])->name('tanggapan');
+    Route::get('/aspirasi/delete/aspirasi/{aspirasi}', [AspirasiController::class, 'delete'])->name('hapus-aspirasi');
+    Route::get('/cek-notifikasi', [AspirasiController::class, 'cekNotif'])->name('cek-notifikasi');
 
 
     //Routing Untuk Laporan
-    // halaman laporan
     Route::get('/laporan', [LaporanController::class, 'index'])->name('laporan');
-    // cetak pdf
     Route::get('/cetak-laporan', [LaporanController::class, 'cetak'])->name('cetak-laporan');
 });
 
 // Routing untuk siswa
 Route::middleware(['auth', 'role:siswa'])->prefix('siswa')->name('siswa.')->group(function () {
     Route::get('/dashboard', [DashboardSiswa::class, 'index'])->name('dashboard');
+
+    // Routing untuk manajemen Aspirasi
     Route::get('/aspirasi', [DashboardSiswa::class, 'tambahAspirasi'])->name('tambah-aspirasi');
     Route::post('/aspirasi', [DashboardSiswa::class, 'simpanAspirasi'])->name('proses-tambah');
     Route::get('/aspirasi/edit/{id}', [DashboardSiswa::class, 'editAspirasi'])->name('edit-aspirasi');
     Route::post('/aspirasi/update/{id}', [DashboardSiswa::class, 'updateAspirasi'])->name('update-aspirasi');
     Route::get('/aspirasi/delete/{id}', [DashboardSiswa::class, 'delete'])->name( 'hapus-aspirasi');
+    Route::get('/siswa/cek-notif', [DashboardSiswa::class, 'cekNotifSiswa'])->name('cek-notif');
 });

@@ -47,8 +47,9 @@
             <table class="table table-dark table-striped table-hover mb-0">
                 <thead>
                     <tr>
-                        <th class="py-3 fw-bold text-white" style="white-space: nowrap;">Tanggal</th>
-                        <th class="py-3 fw-bold text-white" style="white-space: nowrap;">Nama Siswa</th>
+                        <th class="py-3 fw-bold text-white text-nowrap" style="width: 1%;">NO</th>
+                        <th class="py-3 fw-bold text-white text-nowrap" style="width: 1%;">Tanggal</th>
+                        <th class="py-3 fw-bold text-white text-nowrap" style="width: 1%;">Nama Siswa</th>
                         <th class="py-3 fw-bold text-white" style="white-space: nowrap;">Judul</th>
                         <th class="py-3 fw-bold text-white" style="white-space: nowrap;">Isi</th>
                         <th class="py-3 fw-bold text-white" style="white-space: nowrap;">Status</th>
@@ -57,10 +58,11 @@
                 <tbody>
                     @foreach ($aspirasi as $item)
                         <tr>
-                            <td>{{ $item->created_at->format('d-m-Y') }}</td>
+                            <td class="text-center">{{ $aspirasi->firstItem() + $loop->index }}</td>
+                            <td class="text-nowrap">{{ $item->created_at->format('d M Y') }}</td>
                             <td>{{ $item->siswa->user->nama ?? '-' }}</td>
                             <td>{{ $item->judul ?? '-' }}</td>
-                            <td >{{ $item->isi ?? '-' }}</td>
+                            <td>{{ $item->isi ?? '-' }}</td>
                             <td>
                                 @php
                                     $statusClass = match ($item->status) {
@@ -78,5 +80,9 @@
                 </tbody>
             </table>
         </div>
+    </div>
+
+    <div class="mt-5 d-flex justify-content-center">
+        {{ $aspirasi->links() }}
     </div>
 @endsection

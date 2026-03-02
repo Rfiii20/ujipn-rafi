@@ -69,4 +69,14 @@ class AspirasiController extends Controller
     }
 
 
+    public function cekNotif()
+    {
+        $jumlah = Aspirasi::doesntHave('tanggapan')->count();
+
+        return response()->json([
+            'jumlah' => $jumlah
+        ]);
+    }
+
+
 }
