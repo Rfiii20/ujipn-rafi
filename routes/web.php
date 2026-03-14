@@ -73,4 +73,5 @@ Route::middleware(['auth', 'role:siswa'])->prefix('siswa')->name('siswa.')->grou
     Route::post('/aspirasi/update/{id}', [DashboardSiswa::class, 'updateAspirasi'])->name('update-aspirasi');
     Route::get('/aspirasi/delete/{id}', [DashboardSiswa::class, 'delete'])->name( 'hapus-aspirasi');
     Route::get('/siswa/cek-notif', [DashboardSiswa::class, 'cekNotifSiswa'])->name('cek-notif');
+    Route::get('/get-tanggapan', [DashboardSiswa::class, 'gettanggapan'])->name('get-tanggapan');
 });

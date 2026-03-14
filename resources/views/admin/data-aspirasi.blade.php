@@ -123,6 +123,7 @@
                         <div class="form-group mb-3">
                             <label for="status" class="form-label">Ubah Status</label>
                             <select class="form-control" id="status" name="status" required>
+                                <option value="" disabled selected>Pilih Status</option>
                                 <option value="diproses">Diproses</option>
                                 <option value="selesai">Selesai</option>
                                 <option value="ditolak">Ditolak</option>
@@ -164,6 +165,14 @@
                     $('#isi').val(data.aspirasi.isi);
                     if (data.tanggapan) {
                         $('#isi_tanggapan').val(data.tanggapan.isi_tanggapan);
+                        $('#status').val(data.aspirasi.status);
+                    } else {
+                        $('#isi_tanggapan').val('');
+                        $('#status').val('');
+                    }
+                    if (data.aspirasi.status === 'menunggu') {
+                        $('#status').val('');
+                    } else {
                         $('#status').val(data.aspirasi.status);
                     }
                 }

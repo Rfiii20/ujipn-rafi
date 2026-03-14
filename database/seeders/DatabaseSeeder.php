@@ -28,6 +28,14 @@ class DatabaseSeeder extends Seeder
                 'role' => 'admin'
             ],
             [
+                'nama' => 'AbahOnje',
+                'username' => 'Abah',
+                'email' => 'abah@gmail.com',
+                'jabatan' => 'Guru',
+                'password' => bcrypt('admin'),
+                'role' => 'admin'
+            ],
+            [
                 'nama' => 'Anisa',
                 'username' => 'anisa',
                 'email' => 'rafi@gmail.com',
@@ -51,13 +59,13 @@ class DatabaseSeeder extends Seeder
 
         $dataSiswa = [
             [
-                'user_id' => 2,
+                'user_id' => 3,
                 'nis' => '12345678',
                 'kelas' => '12',
                 'jurusan' => 'RPL'
             ],
             [
-                'user_id' => 3,
+                'user_id' => 4,
                 'nis' => '12345679',
                 'kelas' => '12',
                 'jurusan' => 'RPL'

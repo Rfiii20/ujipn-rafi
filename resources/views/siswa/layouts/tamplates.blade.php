@@ -65,7 +65,10 @@
         </main>
     </div>
 
+    <script src="{{ asset('js/jquery-4.0.0.min.js') }}"></script>
     <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+
+    @yield('script')
 
 </body>
 

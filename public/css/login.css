@@ -82,7 +82,7 @@ button:hover {
     opacity: 0.9;
 }
 
-.error {
+.info {
     background: #3b0d0d;
     color: #ffb4b4;
     padding: 10px;

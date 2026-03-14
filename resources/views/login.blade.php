@@ -17,8 +17,8 @@
                 <h2>Login</h2>
                 <p>Sarana & Prasarana</p>
 
-                @if (session('error'))
-                    <div class="error">{{ session('error') }}</div>
+                @if (session('info'))
+                    <div class="info">{{ session('info') }}</div>
                 @endif
 
                 <form method="POST" action="{{ route('login') }}">

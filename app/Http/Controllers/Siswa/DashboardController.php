@@ -105,4 +105,31 @@ class DashboardController extends Controller
             'jumlah' => $jumlah
         ]);
     }
+
+    public function gettanggapan(Request $request)
+    {
+        $id = $request->id;
+        $aspirasi = Aspirasi::with(['tanggapan' => function ($query) {
+            $query->latest();
+        }, 'tanggapan.user'])->find($id);
+
+        if ($aspirasi) {
+            $dataTanggapan = [];
+
+            if ($aspirasi->status == 'selesai' || $aspirasi->status == 'ditolak') {
+                $tanggapanTerakhir = $aspirasi->tanggapan->first();
+                $dataTanggapan = $tanggapanTerakhir ? [$tanggapanTerakhir] : [];
+            } else {
+                $dataTanggapan = $aspirasi->tanggapan;
+            }
+
+            return response()->json([
+                'isi_aspirasi'    => $aspirasi->isi,
+                'status_aspirasi' => $aspirasi->status,
+                'tanggapan'       => $dataTanggapan
+            ]);
+        }
+
+        return response()->json(['error' => 'Data tidak ditemukan'], 404);
+    }
 }
